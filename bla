@@ -1,0 +1,27 @@
+import math
+
+# Function to calculate the square of the distance of a planet from the sun
+def calculate_square(distance, julian_days):
+    # Calculate the mean anomaly of the planet using the formula provided in [source](https://stjarnhimlen.se/comp/tutorial.html)
+    mean_anomaly = (math.pi * julian_days) / 36525
+
+    # Calculate the eccentricity of the planet's orbit using the formula provided in [source](https://stjarnhimlen.se/comp/tutorial.html)
+    eccentricity = 0.01671022
+
+    # Calculate the true anomaly of the planet using the formula provided in [source](https://stjarnhimlen.se/comp/tutorial.html)
+    true_anomaly = 2 * math.atan(math.sqrt((1 + eccentricity) / (1 - eccentricity)) * math.tan(mean_anomaly / 2))
+
+    # Calculate the distance of the planet from the sun using the formula provided in [source](https://stjarnhimlen.se/comp/tutorial.html)
+    distance_from_sun = distance * (1 - eccentricity * math.cos(true_anomaly))
+
+    # Calculate the square of the distance of the planet from the sun
+    square_of_distance = distance_from_sun ** 2
+
+    return square_of_distance
+
+# Example usage of the function
+distance = 1.0  # Example distance in AU
+julian_days = 2459244.5  # Example Julian day
+
+square_of_distance = calculate_square(distance, julian_days)
+print(f"The square of the distance of the planet from the sun is {square_of_distance}")
